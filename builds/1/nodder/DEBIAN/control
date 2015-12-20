@@ -1,0 +1,7 @@
+Package: nodder
+Architecture: amd64
+Maintainer: Andrew Yasinsky
+Depends: debconf (>= 0.5.00)
+Priority: optional
+Version: 1
+Description: nodder

@@ -1,0 +1,3 @@
+/etc/nodder/nodder.cfg
+/etc/init/nodder.conf
+/etc/monit/conf.d/nodder
