@@ -15,15 +15,11 @@ limitations under the License.
 */
 package nodder
 
-import (
-	logging "github.com/op/go-logging"
-)
+//worker instantiates
+//worker tries to become master,
+//if not joins a swarm of bees and retries later
+//masters receive and dole out wokloads
+//bees do the work return data and die
 
-const (
-	STATE_UP   = 1
-	STATE_DOWN = 0
-	USER_AGENT = "Ironpoke/1.0 (https://www.ironpoke.com/)"
-	LOGFMT     = "%{color}%{time:15:04:05.000000} %{shortfunc} ▶ %{level:.4s} %{id:03x}%{color:reset} %{message}"
-)
-
-var log = logging.MustGetLogger("logfile")
+type Worker struct {
+}

@@ -1,3 +1,18 @@
+/**
+Copyright 2015 andrew@yasinsky.com
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 package nodder
 
 import (
@@ -21,7 +36,7 @@ func StartApi(localhttp *string, appdata *AppData, appchannels *AppChannels) {
 	a := &ServiceAPI{AppData: appdata, AppChannels: appchannels}
 	r := pat.New()
 	r.Get("/health", http.HandlerFunc(a.GetHealth))
-	r.Get("/loglevel/{loglevel}", http.HandlerFunc(a.SetLogLevel))
+	r.Post("/loglevel", http.HandlerFunc(a.SetLogLevel))
 	http.Handle("/", r)
 	log.Notice("HTTP Listening %s", *localhttp)
 	err := http.ListenAndServe(*localhttp, nil)
@@ -44,7 +59,7 @@ func (api *ServiceAPI) GetHealth(w http.ResponseWriter, r *http.Request) {
 }
 
 func (api *ServiceAPI) SetLogLevel(w http.ResponseWriter, r *http.Request) {
-	newlvl := strings.ToUpper(r.URL.Query().Get(":loglevel"))
+	newlvl := strings.ToUpper(r.FormValue("loglevel"))
 	res := fmt.Sprintf("\nInvalid log level: %s \n Valid log levels are CRITICAL, ERROR,  WARNING, NOTICE, INFO, DEBUG\n", newlvl)
 
 	if _, err := logging.LogLevel(newlvl); err == nil {
